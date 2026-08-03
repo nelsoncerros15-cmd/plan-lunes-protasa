@@ -2,421 +2,445 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>PROTASA – Plan de Trabajo Semanal</title>
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Oswald:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-
-body {
-  background: #c5bfb2;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 28px 16px 40px;
-  font-family: 'Oswald', sans-serif;
+body{
+  background:#b8b2a6;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:24px 14px 48px;
+  font-family:'Oswald',sans-serif;
 }
 
-/* ── CONTROLES ── */
-.controls {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 18px;
-  flex-wrap: wrap;
-  justify-content: center;
+/* ─── BOTONES SUPERIORES ─── */
+.controls{
+  display:flex;
+  gap:8px;
+  margin-bottom:16px;
+  flex-wrap:wrap;
+  justify-content:center;
+  max-width:490px;
+  width:100%;
 }
-.btn {
-  border: none;
-  border-radius: 10px;
-  padding: 11px 20px;
-  font-family: 'Oswald', sans-serif;
-  font-size: 12px;
-  letter-spacing: 1.2px;
-  cursor: pointer;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  transition: opacity .15s;
+.btn{
+  border:none;
+  border-radius:10px;
+  padding:11px 16px;
+  font-family:'Oswald',sans-serif;
+  font-size:11.5px;
+  letter-spacing:1.1px;
+  cursor:pointer;
+  font-weight:700;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  transition:filter .15s;
+  white-space:nowrap;
 }
-.btn:hover { opacity: .88; }
-.btn-dark { background: #1B3A28; color: #C8A84B; }
-.btn-gold { background: #C8A84B; color: #1B3A28; }
+.btn:hover{filter:brightness(1.1);}
+.btn-dark{background:#1B3A28;color:#C8A84B;}
+.btn-gold{background:#C8A84B;color:#1B3A28;}
 
-/* ── TARJETA ── */
-#card {
-  width: 460px;
-  background: #1B3A28;
-  border-radius: 22px;
-  overflow: hidden;
-}
-
-/* Header */
-.hdr { padding: 16px 20px 0; }
-
-.hdr-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 13px;
-}
-.hdr-name {
-  font-family: 'Oswald', sans-serif;
-  font-size: 26px;
-  font-weight: 700;
-  color: #fff;
-  letter-spacing: 4px;
+/* ─── TARJETA ─── */
+#card{
+  width:490px;
+  max-width:100%;
+  background:#1B3A28;
+  border-radius:24px;
+  overflow:hidden;
 }
 
-.hdr-building {
-  height: 112px;
-  border-radius: 10px 10px 0 0;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding-bottom: 7px;
-  background: #243d2d;
+/* ─── HEADER CON FOTO ─── */
+.hdr{
+  position:relative;
+  height:210px;
+  overflow:hidden;
+  background:#1a3226;
 }
-.hdr-caption {
-  color: rgba(255,255,255,.2);
-  font-size: 8px;
-  letter-spacing: 3px;
-  font-family: 'Oswald', sans-serif;
-  position: relative;
-  z-index: 2;
+#building-photo{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center 40%;
+  display:none;
+}
+#building-svg{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+}
+/* Gradiente sobre la foto para dar contraste al logo */
+.hdr-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    160deg,
+    rgba(10,28,18,.72) 0%,
+    rgba(10,28,18,.25) 45%,
+    rgba(10,28,18,.55) 100%
+  );
+  z-index:1;
+}
+/* Logo PROTASA sobre la foto */
+.hdr-logo{
+  position:absolute;
+  top:18px;
+  left:18px;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+.hdr-logo-name{
+  font-family:'Oswald',sans-serif;
+  font-size:30px;
+  font-weight:700;
+  color:#fff;
+  letter-spacing:5px;
+  text-shadow:1px 2px 10px rgba(0,0,0,.6), 0 0 30px rgba(0,0,0,.4);
+}
+/* Botón añadir/cambiar foto */
+#photo-btn-wrap{
+  position:absolute;
+  bottom:13px;
+  right:13px;
+  z-index:3;
+}
+.photo-btn{
+  background:rgba(0,0,0,.5);
+  border:1px solid rgba(255,255,255,.35);
+  border-radius:8px;
+  color:#fff;
+  font-family:'Oswald',sans-serif;
+  font-size:10.5px;
+  letter-spacing:1px;
+  padding:6px 12px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  backdrop-filter:blur(4px);
+}
+.photo-btn:hover{background:rgba(0,0,0,.7);}
+#file-input{display:none;}
+
+/* ─── CUERPO CREMA CON ARCO ─── */
+.body-cream{
+  background:#F5F0E5;
+  border-radius:32px 32px 0 0;
+  margin-top:-30px;
+  position:relative;
+  z-index:2;
 }
 
-/* Cuerpo crema con arco */
-.body-cream {
-  background: #F5F0E5;
-  border-radius: 28px 28px 0 0;
-  margin-top: -22px;
-  position: relative;
-  z-index: 2;
+/* ─── SECCIÓN TÍTULO ─── */
+.ttl{
+  padding:22px 22px 6px;
+  text-align:center;
+}
+.script-row{
+  font-family:'Dancing Script',cursive;
+  font-size:32px;
+  color:#2a5438;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  line-height:1.2;
+  margin-bottom:2px;
+}
+.main-ttl{
+  font-family:'Oswald',sans-serif;
+  font-size:22px;
+  font-weight:700;
+  color:#1B3A28;
+  letter-spacing:2.5px;
+  margin-bottom:14px;
+}
+.fecha-bar{
+  background:#1B3A28;
+  border-radius:8px;
+  padding:8px 22px;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:16px;
+}
+.fecha-lbl{
+  font-family:'Oswald',sans-serif;
+  font-size:12px;
+  font-weight:700;
+  color:#C8A84B;
+  letter-spacing:2px;
+}
+.fecha-val{
+  color:#F5F0E5;
+  font-size:15px;
+  font-family:'Oswald',sans-serif;
+  letter-spacing:2px;
+  min-width:100px;
+  text-align:center;
+  outline:none;
+  border-bottom:1.5px solid rgba(200,168,75,.5);
+  padding:2px 6px;
+  cursor:text;
+}
+.divider-line{
+  width:50%;
+  height:1px;
+  background:rgba(42,84,56,.12);
+  margin:0 auto 12px;
 }
 
-/* Título */
-.ttl {
-  padding: 18px 20px 8px;
-  text-align: center;
-}
-.script-row {
-  font-family: 'Dancing Script', cursive;
-  font-size: 28px;
-  color: #2a5438;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  line-height: 1.2;
-}
-.main-ttl {
-  font-family: 'Oswald', sans-serif;
-  font-size: 20px;
-  font-weight: 700;
-  color: #1B3A28;
-  letter-spacing: 2px;
-  margin: 3px 0 13px;
-}
-.fecha-bar {
-  background: #1B3A28;
-  border-radius: 8px;
-  padding: 7px 20px;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 14px;
-}
-.fecha-lbl {
-  font-family: 'Oswald', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  color: #C8A84B;
-  letter-spacing: 2px;
-}
-.fecha-val {
-  color: #F5F0E5;
-  font-size: 14px;
-  font-family: 'Oswald', sans-serif;
-  letter-spacing: 1.5px;
-  min-width: 90px;
-  text-align: center;
-  outline: none;
-  border-bottom: 1px solid rgba(200,168,75,.5);
-  padding: 1px 6px;
-  cursor: text;
-}
+/* ─── FILAS DE ACTIVIDADES ─── */
+.acts{padding:2px 16px 6px;}
 
-/* Divisor fino */
-.divider {
-  width: 60%;
-  height: 1px;
-  background: rgba(45,84,56,.15);
-  margin: 0 auto 10px;
+.row{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  background:#fff;
+  border:1px solid #ddd5c5;
+  border-radius:14px;
+  padding:12px 44px 12px 12px;
+  margin-bottom:10px;
+  position:relative;
 }
+.ico{
+  width:56px;
+  height:56px;
+  min-width:56px;
+  background:#1B3A28;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:opacity .15s,transform .12s;
+}
+.ico:hover{opacity:.85;transform:scale(1.06);}
+.act-body{flex:1;min-width:0;}
+.act-ttl{
+  font-family:'Oswald',sans-serif;
+  font-size:15px;
+  font-weight:700;
+  color:#1B3A28;
+  letter-spacing:.6px;
+  outline:none;
+  cursor:text;
+  min-height:22px;
+  display:block;
+}
+.act-dtl{
+  font-family:'Oswald',sans-serif;
+  font-size:13.5px;
+  color:#4e6e4c;
+  outline:none;
+  cursor:text;
+  min-height:19px;
+  display:block;
+  margin-top:3px;
+}
+[contenteditable]:focus{background:rgba(200,168,75,.08);border-radius:3px;padding:0 3px;}
+[contenteditable]:empty::before{content:attr(placeholder);color:#c5c5c5;font-style:italic;}
+.delbtn{
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  background:none;
+  border:none;
+  color:#ccc;
+  cursor:pointer;
+  font-size:18px;
+  padding:4px;
+  border-radius:4px;
+  display:none;
+  line-height:1;
+}
+.row:hover .delbtn{display:block;}
+.delbtn:hover{color:#d04040;}
 
-/* Actividades */
-.acts { padding: 2px 14px 6px; }
+/* Botón agregar */
+.add-wrap{padding:2px 16px 18px;}
+.addbtn{
+  width:100%;
+  background:none;
+  border:2px dashed #2a5438;
+  border-radius:12px;
+  color:#2a5438;
+  font-size:12px;
+  padding:10px;
+  cursor:pointer;
+  font-family:'Oswald',sans-serif;
+  letter-spacing:1.5px;
+  font-weight:700;
+}
+.addbtn:hover{background:rgba(42,84,56,.05);}
 
-.row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: #fff;
-  border: 1px solid #E2D8CA;
-  border-radius: 13px;
-  padding: 11px 36px 11px 12px;
-  margin-bottom: 9px;
-  position: relative;
+/* ─── FOOTER ─── */
+.ftr{background:#1B3A28;padding:16px 22px 18px;}
+.ftr-top{display:flex;align-items:center;gap:14px;margin-bottom:12px;}
+.p-logo{
+  width:40px;height:40px;min-width:40px;
+  border:1.5px solid #C8A84B;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:#C8A84B;font-size:19px;font-weight:700;
+  font-family:'Oswald',sans-serif;
 }
-.ico {
-  width: 52px;
-  height: 52px;
-  min-width: 52px;
-  background: #1B3A28;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: opacity .15s;
+.p-name{color:#C8A84B;font-size:12px;letter-spacing:2.5px;font-family:'Oswald',sans-serif;}
+.p-sub{color:rgba(200,168,75,.4);font-size:8px;letter-spacing:2px;font-family:'Oswald',sans-serif;}
+.tagline{
+  text-align:center;
+  color:rgba(200,168,75,.78);
+  font-size:8.5px;letter-spacing:1px;line-height:1.9;
+  margin-bottom:12px;
+  font-family:'Oswald',sans-serif;
 }
-.ico:hover { opacity: .85; }
-.act-body { flex: 1; min-width: 0; }
+.vals{
+  display:grid;grid-template-columns:1fr 1fr 1fr 1fr;
+  gap:4px;text-align:center;
+  border-top:1px solid rgba(200,168,75,.14);
+  padding-top:12px;
+}
+.vn{color:#7ab08a;font-size:8px;letter-spacing:.7px;display:block;font-family:'Oswald',sans-serif;}
+.vs{color:#4a7a5a;font-size:7px;display:block;margin-top:2px;font-family:'Oswald',sans-serif;}
 
-.act-ttl {
-  font-family: 'Oswald', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  color: #1B3A28;
-  letter-spacing: .5px;
-  outline: none;
-  cursor: text;
-  min-height: 20px;
-  display: block;
-}
-.act-dtl {
-  font-family: 'Oswald', sans-serif;
-  font-size: 14px;
-  color: #5a7058;
-  outline: none;
-  cursor: text;
-  min-height: 17px;
-  display: block;
-  margin-top: 2px;
-}
-[contenteditable]:focus { background: rgba(200,168,75,.07); border-radius: 3px; padding: 0 3px; }
-[contenteditable]:empty::before { content: attr(placeholder); color: #bbb; font-style: italic; }
-
-.delbtn {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  color: #d0c8c0;
-  cursor: pointer;
-  font-size: 17px;
-  padding: 4px;
-  border-radius: 4px;
-  display: none;
-  line-height: 1;
-  font-family: monospace;
-}
-.row:hover .delbtn { display: block; }
-.delbtn:hover { color: #d94040; }
-
-/* Agregar */
-.add-wrap { padding: 0 14px 14px; }
-.addbtn {
-  width: 100%;
-  background: none;
-  border: 2px dashed #2a5438;
-  border-radius: 11px;
-  color: #2a5438;
-  font-size: 11.5px;
-  padding: 9px;
-  cursor: pointer;
-  font-family: 'Oswald', sans-serif;
-  letter-spacing: 1.5px;
-  font-weight: 600;
-}
-.addbtn:hover { background: rgba(42,84,56,.05); }
-
-/* Footer */
-.ftr {
-  background: #1B3A28;
-  padding: 15px 20px 16px;
-}
-.ftr-top {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 10px;
-}
-.p-logo {
-  width: 38px;
-  height: 38px;
-  min-width: 38px;
-  border: 1.5px solid #C8A84B;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #C8A84B;
-  font-size: 18px;
-  font-weight: 700;
-  font-family: 'Oswald', sans-serif;
-}
-.p-brand { line-height: 1.3; }
-.p-name { color: #C8A84B; font-size: 11px; letter-spacing: 2.5px; font-family: 'Oswald', sans-serif; }
-.p-sub  { color: rgba(200,168,75,.4); font-size: 8px; letter-spacing: 2px; font-family: 'Oswald', sans-serif; }
-
-.tagline {
-  text-align: center;
-  color: rgba(200,168,75,.72);
-  font-size: 8px;
-  letter-spacing: .8px;
-  line-height: 1.8;
-  margin-bottom: 11px;
-  font-family: 'Oswald', sans-serif;
-}
-.vals {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 4px;
-  text-align: center;
-  border-top: 1px solid rgba(200,168,75,.12);
-  padding-top: 10px;
-}
-.vn { color: #7ab08a; font-size: 7.5px; letter-spacing: .6px; display: block; font-family: 'Oswald', sans-serif; }
-.vs { color: #4a7a5a; font-size: 6.5px; display: block; margin-top: 2px; font-family: 'Oswald', sans-serif; }
-
-/* ── Ícono helper "tooltip" ── */
-.ico-tip {
-  font-size: 9px;
-  color: #999;
-  text-align: center;
-  margin-bottom: 6px;
-  font-family: 'Oswald', sans-serif;
-  letter-spacing: .5px;
-}
+/* Tip */
+.tip{font-size:9.5px;color:#999;text-align:center;margin-bottom:6px;font-family:'Oswald',sans-serif;letter-spacing:.4px;}
 </style>
 </head>
 <body>
 
-<!-- Controles fuera de la tarjeta -->
+<!-- CONTROLES -->
 <div class="controls" id="controls">
   <button class="btn btn-dark" onclick="addRow()">&#43; AGREGAR ÁREA</button>
-  <button class="btn btn-gold" onclick="descargar()">&#11015; DESCARGAR IMAGEN</button>
-  <button class="btn btn-dark" onclick="copiarTexto()">&#128203; COPIAR PARA WHATSAPP</button>
+  <button class="btn btn-gold" onclick="descargar()">&#128228; COMPARTIR / DESCARGAR</button>
+  <button class="btn btn-dark" onclick="copiarTexto()">&#128203; COPIAR WHATSAPP</button>
 </div>
 
-<!-- ═══════════ TARJETA ═══════════ -->
+<!-- ══════════════ TARJETA ══════════════ -->
 <div id="card">
 
-  <!-- HEADER VERDE -->
+  <!-- HEADER -->
   <div class="hdr">
+    <!-- Foto real del edificio PROTASA (desde la carpeta) -->
+    <img id="building-photo" src="PORTADA PROTASA.png" alt="Edificio PROTASA"
+         style="display:block; object-position:center 78%;"/>
+
+    <!-- SVG de respaldo (se usa solo si no carga la foto) -->
+    <svg id="building-svg" style="display:none;" viewBox="0 0 490 210" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="490" height="210" fill="#1e3d2b"/>
+      <rect y="0" width="490" height="130" fill="#244535" opacity=".6"/>
+      <!-- Luz de sol -->
+      <circle cx="390" cy="30" r="25" fill="rgba(255,220,80,.09)"/>
+      <circle cx="390" cy="30" r="13" fill="rgba(255,220,80,.14)"/>
+      <!-- Nubes -->
+      <ellipse cx="350" cy="38" rx="58" ry="20" fill="rgba(255,255,255,.05)"/>
+      <ellipse cx="415" cy="30" rx="40" ry="15" fill="rgba(255,255,255,.05)"/>
+      <ellipse cx="110" cy="33" rx="50" ry="18" fill="rgba(255,255,255,.04)"/>
+      <!-- Palmas izquierda -->
+      <line x1="58" y1="210" x2="58" y2="74" stroke="#0e1e14" stroke-width="8"/>
+      <ellipse cx="50" cy="70" rx="30" ry="18" fill="#0e1e14" transform="rotate(-10 50 70)"/>
+      <ellipse cx="70" cy="62" rx="23" ry="13" fill="#0e1e14" transform="rotate(28 70 62)"/>
+      <ellipse cx="38" cy="59" rx="19" ry="11" fill="#0e1e14" transform="rotate(-30 38 59)"/>
+      <!-- Palmas derecha -->
+      <line x1="432" y1="210" x2="432" y2="74" stroke="#0e1e14" stroke-width="8"/>
+      <ellipse cx="440" cy="70" rx="30" ry="18" fill="#0e1e14" transform="rotate(10 440 70)"/>
+      <ellipse cx="420" cy="62" rx="23" ry="13" fill="#0e1e14" transform="rotate(-28 420 62)"/>
+      <ellipse cx="452" cy="59" rx="19" ry="11" fill="#0e1e14" transform="rotate(30 452 59)"/>
+      <!-- Cuerpo edificio -->
+      <rect x="100" y="65" width="290" height="145" fill="#3d6e4e"/>
+      <!-- Techo triangular -->
+      <polygon points="82,65 245,20 408,65" fill="#4f8060"/>
+      <!-- Alas -->
+      <rect x="55" y="95" width="54" height="115" fill="#3d6e4e"/>
+      <rect x="381" y="95" width="54" height="115" fill="#3d6e4e"/>
+      <!-- Ventanas arco -->
+      <ellipse cx="148" cy="105" rx="16" ry="24" fill="rgba(190,240,210,.11)"/>
+      <ellipse cx="195" cy="105" rx="16" ry="24" fill="rgba(190,240,210,.11)"/>
+      <ellipse cx="245" cy="105" rx="16" ry="24" fill="rgba(190,240,210,.11)"/>
+      <ellipse cx="295" cy="105" rx="16" ry="24" fill="rgba(190,240,210,.11)"/>
+      <ellipse cx="342" cy="105" rx="16" ry="24" fill="rgba(190,240,210,.11)"/>
+      <!-- Ventanas alas -->
+      <ellipse cx="82"  cy="128" rx="13" ry="19" fill="rgba(190,240,210,.09)"/>
+      <ellipse cx="408" cy="128" rx="13" ry="19" fill="rgba(190,240,210,.09)"/>
+      <!-- Puerta -->
+      <rect x="228" y="152" width="34" height="58" rx="7" fill="#2a4f38"/>
+      <!-- Cerca -->
+      <rect x="40" y="196" width="410" height="6" fill="#4d8060" rx="2"/>
+      <!-- Vegetación base -->
+      <ellipse cx="130" cy="200" rx="30" ry="12" fill="#1a3522"/>
+      <ellipse cx="360" cy="200" rx="30" ry="12" fill="#1a3522"/>
+      <!-- Letrero sobre el edificio -->
+      <rect x="224" y="70" width="42" height="13" rx="2.5" fill="#1B3A28" opacity=".6"/>
+      <text x="245" y="80" font-family="Arial,sans-serif" font-size="7.5" fill="rgba(255,255,255,.65)" text-anchor="middle" letter-spacing="1.5">PROTASA</text>
+    </svg>
+
+    <!-- Oscurecimiento sobre foto/svg -->
+    <div class="hdr-overlay"></div>
+
+    <!-- Logo PROTASA -->
     <div class="hdr-logo">
-      <!-- Hoja PROTASA -->
-      <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-        <ellipse cx="15" cy="15" rx="6.5" ry="12" transform="rotate(-20 15 15)" fill="white" opacity=".9"/>
-        <line x1="15" y1="25" x2="15" y2="6" stroke="#1B3A28" stroke-width="1.5"/>
-        <line x1="15" y1="16" x2="18.5" y2="12.5" stroke="#1B3A28" stroke-width="1.1"/>
-        <line x1="15" y1="19.5" x2="11.5" y2="16" stroke="#1B3A28" stroke-width="1.1"/>
-        <line x1="15" y1="12.5" x2="17.5" y2="10" stroke="#1B3A28" stroke-width=".9"/>
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+        <ellipse cx="17" cy="17" rx="7.5" ry="14" transform="rotate(-20 17 17)" fill="white" opacity=".92"/>
+        <line x1="17" y1="29" x2="17" y2="7" stroke="#1B3A28" stroke-width="1.7"/>
+        <line x1="17" y1="19" x2="21.5" y2="14.5" stroke="#1B3A28" stroke-width="1.3"/>
+        <line x1="17" y1="23" x2="12.5" y2="18.5" stroke="#1B3A28" stroke-width="1.3"/>
+        <line x1="17" y1="14.5" x2="20.5" y2="11" stroke="#1B3A28" stroke-width="1.1"/>
       </svg>
-      <span class="hdr-name">PROTASA</span>
+      <span class="hdr-logo-name">PROTASA</span>
     </div>
 
-    <!-- Área del edificio -->
-    <div class="hdr-building">
-      <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 460 112" preserveAspectRatio="xMidYMax slice" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Fondo cielo -->
-        <rect width="460" height="112" fill="#243d2d"/>
-        <!-- Nubes suaves -->
-        <ellipse cx="340" cy="22" rx="40" ry="14" fill="rgba(255,255,255,.04)"/>
-        <ellipse cx="380" cy="18" rx="28" ry="10" fill="rgba(255,255,255,.04)"/>
-        <!-- Palmas izquierda -->
-        <line x1="52" y1="112" x2="52" y2="42" stroke="#142a1c" stroke-width="5"/>
-        <ellipse cx="47" cy="40" rx="23" ry="14" fill="#142a1c" transform="rotate(-8 47 40)"/>
-        <ellipse cx="62" cy="35" rx="18" ry="10" fill="#142a1c" transform="rotate(22 62 35)"/>
-        <ellipse cx="40" cy="34" rx="14" ry="8" fill="#142a1c" transform="rotate(-25 40 34)"/>
-        <!-- Palmas derecha -->
-        <line x1="408" y1="112" x2="408" y2="42" stroke="#142a1c" stroke-width="5"/>
-        <ellipse cx="413" cy="40" rx="23" ry="14" fill="#142a1c" transform="rotate(8 413 40)"/>
-        <ellipse cx="398" cy="35" rx="18" ry="10" fill="#142a1c" transform="rotate(-22 398 35)"/>
-        <ellipse cx="420" cy="34" rx="14" ry="8" fill="#142a1c" transform="rotate(25 420 34)"/>
-        <!-- Edificio principal -->
-        <rect x="118" y="30" width="224" height="82" fill="#3a6a4a"/>
-        <!-- Techo -->
-        <polygon points="103,30 230,3 357,30" fill="#4d8060"/>
-        <!-- Alas laterales -->
-        <rect x="66" y="52" width="60" height="60" fill="#3a6a4a"/>
-        <rect x="334" y="52" width="60" height="60" fill="#3a6a4a"/>
-        <!-- Ventanas arco – main -->
-        <ellipse cx="162" cy="60" rx="13" ry="18" fill="rgba(180,225,195,.11)"/>
-        <ellipse cx="198" cy="60" rx="13" ry="18" fill="rgba(180,225,195,.11)"/>
-        <ellipse cx="230" cy="60" rx="13" ry="18" fill="rgba(180,225,195,.11)"/>
-        <ellipse cx="262" cy="60" rx="13" ry="18" fill="rgba(180,225,195,.11)"/>
-        <ellipse cx="298" cy="60" rx="13" ry="18" fill="rgba(180,225,195,.11)"/>
-        <!-- Ventanas alas -->
-        <ellipse cx="88"  cy="70" rx="10" ry="14" fill="rgba(180,225,195,.1)"/>
-        <ellipse cx="356" cy="70" rx="10" ry="14" fill="rgba(180,225,195,.1)"/>
-        <!-- Puerta -->
-        <rect x="215" y="78" width="30" height="34" rx="6" fill="#2a4f38"/>
-        <!-- Cerca -->
-        <rect x="55" y="102" width="350" height="4" fill="#3a6a4a" rx="1"/>
-        <!-- Letrero PROTASA -->
-        <rect x="212" y="33" width="36" height="11" rx="2" fill="#1B3A28" opacity=".55"/>
-        <text x="230" y="41.5" font-family="Arial,sans-serif" font-size="6" fill="rgba(255,255,255,.6)" text-anchor="middle" letter-spacing="1">PROTASA</text>
-      </svg>
-      <span class="hdr-caption">PREINDUSTRIA · OCOTAL, N.S. · NICARAGUA</span>
+    <!-- Botón cargar foto del edificio -->
+    <div id="photo-btn-wrap">
+      <button class="photo-btn" onclick="document.getElementById('file-input').click()">
+        📷 <span id="photo-btn-lbl">Cambiar foto</span>
+      </button>
+      <input id="file-input" type="file" accept="image/*" onchange="cargarFoto(this)"/>
     </div>
-  </div><!-- /hdr -->
+  </div>
 
-  <!-- CUERPO CREMA con arco -->
+  <!-- CUERPO CREMA -->
   <div class="body-cream">
-
-    <!-- Título -->
     <div class="ttl">
       <div class="script-row">
-        <svg width="17" height="17" viewBox="0 0 17 17"><ellipse cx="8.5" cy="8.5" rx="4" ry="7" transform="rotate(-20 8.5 8.5)" fill="#2a5438" opacity=".75"/></svg>
+        <svg width="18" height="18" viewBox="0 0 18 18"><ellipse cx="9" cy="9" rx="4.5" ry="7.5" transform="rotate(-20 9 9)" fill="#2a5438" opacity=".75"/></svg>
         Plan de Trabajo
-        <svg width="17" height="17" viewBox="0 0 17 17"><ellipse cx="8.5" cy="8.5" rx="4" ry="7" transform="rotate(20 8.5 8.5)" fill="#2a5438" opacity=".75"/></svg>
+        <svg width="18" height="18" viewBox="0 0 18 18"><ellipse cx="9" cy="9" rx="4.5" ry="7.5" transform="rotate(20 9 9)" fill="#2a5438" opacity=".75"/></svg>
       </div>
       <div class="main-ttl">ACTIVIDADES PARA EL LUNES</div>
       <div class="fecha-bar">
         <span class="fecha-lbl">FECHA:</span>
-        <span class="fecha-val"
-              id="fecha"
-              contenteditable="true"
-              spellcheck="false"
-              placeholder="DD-MM-AA">12-01-26</span>
+        <span class="fecha-val" id="fecha" contenteditable="true" spellcheck="false" placeholder="DD-MM-AA">12-01-26</span>
       </div>
-      <div class="divider"></div>
+      <div class="divider-line"></div>
     </div>
 
-    <!-- Actividades -->
+    <!-- FILAS -->
+    <p class="tip" id="tip">Toca el ícono verde para cambiarlo · Toca el texto para editar</p>
     <div class="acts" id="acts"></div>
 
-    <!-- Botón agregar (se oculta al descargar) -->
     <div class="add-wrap" id="add-wrap">
       <button class="addbtn" onclick="addRow()">&#43; AGREGAR ÁREA</button>
     </div>
-
-  </div><!-- /body-cream -->
+  </div>
 
   <!-- FOOTER -->
   <div class="ftr">
     <div class="ftr-top">
       <div class="p-logo">P</div>
-      <div class="p-brand">
+      <div>
         <div class="p-name">PLASENCIA</div>
         <div class="p-sub">GROUP</div>
       </div>
@@ -434,181 +458,246 @@ body {
 
 </div><!-- /card -->
 
-<!-- ═══════════ JAVASCRIPT ═══════════ -->
+<!-- ══════════════ JAVASCRIPT ══════════════ -->
 <script>
-/* ── Íconos inline SVG ── */
+/* ── Íconos SVG ── */
 var ICONS = {
-  leaf: '<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><ellipse cx="13" cy="13" rx="6" ry="11" transform="rotate(-20 13 13)" fill="white" opacity=".88"/><line x1="13" y1="22" x2="13" y2="5" stroke="#1B3A28" stroke-width="1.4"/><line x1="13" y1="15" x2="16.5" y2="11.5" stroke="#1B3A28" stroke-width="1.1"/><line x1="13" y1="18.5" x2="9.5" y2="15" stroke="#1B3A28" stroke-width="1.1"/><line x1="13" y1="11.5" x2="15.5" y2="9" stroke="#1B3A28" stroke-width=".9"/></svg>',
-  plant: '<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><line x1="13" y1="24" x2="13" y2="13" stroke="white" stroke-width="1.6"/><circle cx="13" cy="10" r="5.5" stroke="white" stroke-width="1.3" fill="none"/><line x1="13" y1="10" x2="9.5" y2="6.5" stroke="white" stroke-width="1.1"/><line x1="13" y1="10" x2="16.5" y2="6.5" stroke="white" stroke-width="1.1"/><line x1="13" y1="14" x2="8.5" y2="11" stroke="white" stroke-width="1.1"/><line x1="13" y1="14" x2="17.5" y2="11" stroke="white" stroke-width="1.1"/></svg>',
-  warehouse: '<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="3" y="10" width="20" height="14" rx="1" stroke="white" stroke-width="1.3"/><polyline points="2,10 13,2 24,10" stroke="white" stroke-width="1.3" fill="none"/><rect x="10" y="16" width="6" height="8" stroke="white" stroke-width="1.1"/><rect x="4.5" y="13" width="4" height="4" rx=".6" stroke="white" stroke-width="1"/><rect x="17.5" y="13" width="4" height="4" rx=".6" stroke="white" stroke-width="1"/></svg>',
-  note: '<svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="4" y="3" width="18" height="20" rx="2" stroke="white" stroke-width="1.3"/><line x1="8" y1="9" x2="18" y2="9" stroke="white" stroke-width="1.1"/><line x1="8" y1="13" x2="18" y2="13" stroke="white" stroke-width="1.1"/><line x1="8" y1="17" x2="14" y2="17" stroke="white" stroke-width="1.1"/></svg>'
+  leaf:
+    '<svg width="28" height="28" viewBox="0 0 28 28" fill="none">'
+    +'<ellipse cx="14" cy="14" rx="6.5" ry="12" transform="rotate(-20 14 14)" fill="white" opacity=".9"/>'
+    +'<line x1="14" y1="24" x2="14" y2="6" stroke="#1B3A28" stroke-width="1.5"/>'
+    +'<line x1="14" y1="16" x2="18" y2="12" stroke="#1B3A28" stroke-width="1.1"/>'
+    +'<line x1="14" y1="19.5" x2="10" y2="15.5" stroke="#1B3A28" stroke-width="1.1"/>'
+    +'<line x1="14" y1="12.5" x2="17" y2="9.5" stroke="#1B3A28" stroke-width=".9"/>'
+    +'</svg>',
+  plant:
+    '<svg width="28" height="28" viewBox="0 0 28 28" fill="none">'
+    +'<line x1="14" y1="26" x2="14" y2="15" stroke="white" stroke-width="1.7"/>'
+    +'<circle cx="14" cy="11" r="6" stroke="white" stroke-width="1.3" fill="none"/>'
+    +'<line x1="14" y1="11" x2="10" y2="7" stroke="white" stroke-width="1.1"/>'
+    +'<line x1="14" y1="11" x2="18" y2="7" stroke="white" stroke-width="1.1"/>'
+    +'<line x1="14" y1="15" x2="9" y2="12" stroke="white" stroke-width="1.1"/>'
+    +'<line x1="14" y1="15" x2="19" y2="12" stroke="white" stroke-width="1.1"/>'
+    +'</svg>',
+  warehouse:
+    '<svg width="28" height="28" viewBox="0 0 28 28" fill="none">'
+    +'<rect x="3" y="11" width="22" height="16" rx="1.5" stroke="white" stroke-width="1.4"/>'
+    +'<polyline points="2,11 14,2 26,11" stroke="white" stroke-width="1.4" fill="none"/>'
+    +'<rect x="11" y="18" width="6" height="9" stroke="white" stroke-width="1.2"/>'
+    +'<rect x="4.5" y="14.5" width="4.5" height="4.5" rx=".8" stroke="white" stroke-width="1.1"/>'
+    +'<rect x="19" y="14.5" width="4.5" height="4.5" rx=".8" stroke="white" stroke-width="1.1"/>'
+    +'</svg>',
+  note:
+    '<svg width="28" height="28" viewBox="0 0 28 28" fill="none">'
+    +'<rect x="4" y="3" width="20" height="22" rx="2.5" stroke="white" stroke-width="1.4"/>'
+    +'<line x1="8.5" y1="9"  x2="19.5" y2="9"  stroke="white" stroke-width="1.2"/>'
+    +'<line x1="8.5" y1="14" x2="19.5" y2="14" stroke="white" stroke-width="1.2"/>'
+    +'<line x1="8.5" y1="19" x2="15"   y2="19" stroke="white" stroke-width="1.2"/>'
+    +'</svg>'
 };
-var CYCLE = ['leaf', 'plant', 'warehouse', 'note'];
+var CYCLE = ['leaf','plant','warehouse','note'];
 
 /* ── Datos iniciales ── */
 var rows = [
-  { icon: 'leaf',      title: 'DESPALILLO #1',           detail: '(Jalapa FINO · Mayo-25)' },
-  { icon: 'plant',     title: 'DESPALILLO #3 – ABERTURA', detail: '(Esteli F. · Julio-25)'  },
-  { icon: 'plant',     title: 'DESPALILLO #4 – ABERTURA', detail: '(Esteli F. · Julio-25)'  },
-  { icon: 'warehouse', title: 'OTRAS ACTIVIDADES / NOTAS', detail: ''                        }
+  { icon:'leaf',      title:'DESPALILLO #1',            detail:'(Jalapa FINO · Mayo-25)'  },
+  { icon:'plant',     title:'DESPALILLO #3 – ABERTURA', detail:'(Esteli F. · Julio-25)'  },
+  { icon:'plant',     title:'DESPALILLO #4 – ABERTURA', detail:'(Esteli F. · Julio-25)'  },
+  { icon:'warehouse', title:'OTRAS ACTIVIDADES / NOTAS', detail:''                        }
 ];
 
 /* ── Escape HTML ── */
-function esc(s) {
-  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-/* ── Renderizar filas ── */
-function render() {
+/* ── Renderizar actividades ── */
+function render(){
   var c = document.getElementById('acts');
   c.innerHTML = '';
-  rows.forEach(function(r, i) {
+  rows.forEach(function(r,i){
     var d = document.createElement('div');
     d.className = 'row';
     d.innerHTML =
-      '<div class="ico" onclick="cycleIcon(' + i + ')" title="Clic para cambiar ícono">'
-        + ICONS[r.icon] +
-      '</div>' +
-      '<div class="act-body">' +
-        '<div class="act-ttl" contenteditable="true" spellcheck="false" placeholder="Nombre de la actividad">' + esc(r.title) + '</div>' +
-        '<div class="act-dtl" contenteditable="true" spellcheck="false" placeholder="(detalle, cosecha, origen...)">' + esc(r.detail) + '</div>' +
-      '</div>' +
-      '<button class="delbtn" onclick="delRow(' + i + ')" title="Eliminar fila">&#10005;</button>';
-
-    /* Guardar cambios en tiempo real */
-    d.querySelector('.act-ttl').addEventListener('input', (function(idx) {
-      return function() { rows[idx].title = this.textContent.trim(); };
+      '<div class="ico" onclick="cycleIcon('+i+')" title="Toca para cambiar ícono">'+ICONS[r.icon]+'</div>'+
+      '<div class="act-body">'+
+        '<div class="act-ttl" contenteditable="true" spellcheck="false" placeholder="Nombre de la actividad">'+esc(r.title)+'</div>'+
+        '<div class="act-dtl" contenteditable="true" spellcheck="false" placeholder="(detalle, cosecha, origen...)">'+esc(r.detail)+'</div>'+
+      '</div>'+
+      '<button class="delbtn" onclick="delRow('+i+')" title="Eliminar">&#10005;</button>';
+    d.querySelector('.act-ttl').addEventListener('input',(function(idx){
+      return function(){ rows[idx].title = this.textContent.trim(); };
     })(i));
-    d.querySelector('.act-dtl').addEventListener('input', (function(idx) {
-      return function() { rows[idx].detail = this.textContent.trim(); };
+    d.querySelector('.act-dtl').addEventListener('input',(function(idx){
+      return function(){ rows[idx].detail = this.textContent.trim(); };
     })(i));
-
     c.appendChild(d);
   });
 }
 
-/* ── Ciclar ícono al hacer clic ── */
-function cycleIcon(i) {
-  var idx = CYCLE.indexOf(rows[i].icon);
-  rows[i].icon = CYCLE[(idx + 1) % CYCLE.length];
+function cycleIcon(i){
+  rows[i].icon = CYCLE[(CYCLE.indexOf(rows[i].icon)+1) % CYCLE.length];
   render();
 }
 
-/* ── Agregar fila ── */
-function addRow() {
-  rows.push({ icon: 'leaf', title: 'NUEVA ÁREA', detail: '' });
+function addRow(){
+  rows.push({ icon:'leaf', title:'NUEVA ÁREA', detail:'' });
   render();
-  setTimeout(function() {
-    var ttls = document.querySelectorAll('.act-ttl');
-    if (ttls.length) {
-      var last = ttls[ttls.length - 1];
-      last.focus();
-      var range = document.createRange();
-      range.selectNodeContents(last);
-      var sel = window.getSelection();
-      sel.removeAllRanges();
-      sel.addRange(range);
-    }
+  setTimeout(function(){
+    var all = document.querySelectorAll('.act-ttl');
+    if(!all.length) return;
+    var last = all[all.length-1];
+    last.focus();
+    var r = document.createRange();
+    r.selectNodeContents(last);
+    var s = window.getSelection();
+    s.removeAllRanges();
+    s.addRange(r);
   }, 80);
 }
 
-/* ── Eliminar fila ── */
-function delRow(i) {
-  if (rows.length <= 1) { alert('Debe haber al menos una actividad.'); return; }
-  rows.splice(i, 1);
+function delRow(i){
+  if(rows.length <= 1) return;
+  rows.splice(i,1);
   render();
 }
 
-/* ── Descargar imagen ── */
-function descargar() {
+/* ── Cargar foto del edificio ── */
+function cargarFoto(input){
+  var file = input.files[0];
+  if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e){
+    var url = e.target.result;
+    var img = document.getElementById('building-photo');
+    var svg = document.getElementById('building-svg');
+    img.src = url;
+    img.style.display = 'block';
+    svg.style.display = 'none';
+    document.getElementById('photo-btn-lbl').textContent = 'Cambiar foto';
+    try { localStorage.setItem('protasa_foto', url); } catch(ex){}
+  };
+  reader.readAsDataURL(file);
+  input.value = '';
+}
+
+/* Si el usuario cambió la foto manualmente, restaurarla */
+(function(){
+  try {
+    var saved = localStorage.getItem('protasa_foto');
+    if(saved){
+      var img = document.getElementById('building-photo');
+      img.src = saved;
+      img.style.objectPosition = 'center center';
+    }
+  } catch(ex){}
+})();
+
+/* ── Compartir / Descargar imagen ── */
+function descargar(){
   var addWrap  = document.getElementById('add-wrap');
   var controls = document.getElementById('controls');
-  var tip      = document.querySelector('.ico-tip');
+  var tip      = document.getElementById('tip');
+  var pWrap    = document.getElementById('photo-btn-wrap');
 
-  addWrap.style.display  = 'none';
-  controls.style.opacity = '.4';
-  controls.style.pointerEvents = 'none';
-  if (tip) tip.style.display = 'none';
-  document.querySelectorAll('.delbtn').forEach(function(b){ b.style.display = 'none'; });
+  /* Ocultar controles de edición */
+  addWrap.style.display     = 'none';
+  pWrap.style.display       = 'none';
+  controls.style.visibility = 'hidden';
+  tip.style.display         = 'none';
+  document.querySelectorAll('.delbtn').forEach(function(b){ b.style.display='none'; });
 
-  document.fonts.ready.then(function() {
-    html2canvas(document.getElementById('card'), {
-      scale: 3,
-      useCORS: true,
-      allowTaint: false,
-      backgroundColor: '#1B3A28',
-      logging: false
-    }).then(function(canvas) {
-      var fecha = (document.getElementById('fecha').textContent || 'semana').trim().replace(/[\/\\:*?"<>|]/g,'_');
-      var a = document.createElement('a');
-      a.download = 'PROTASA-Plan-Lunes-' + fecha + '.png';
-      a.href = canvas.toDataURL('image/png');
-      a.click();
+  mostrarToast('Generando imagen…');
 
-      /* Restaurar */
-      addWrap.style.display  = '';
-      controls.style.opacity = '1';
-      controls.style.pointerEvents = '';
-      if (tip) tip.style.display = '';
-      document.querySelectorAll('.delbtn').forEach(function(b){ b.style.display = ''; });
-    }).catch(function(err) {
-      alert('Error al generar imagen: ' + err.message);
-      addWrap.style.display  = '';
-      controls.style.opacity = '1';
-      controls.style.pointerEvents = '';
+  document.fonts.ready.then(function(){
+    html2canvas(document.getElementById('card'),{
+      scale           : 3,
+      useCORS         : true,
+      allowTaint      : true,
+      imageTimeout    : 8000,
+      backgroundColor : '#1B3A28',
+      logging         : false,
+      onclone     : function(doc){
+        doc.querySelectorAll('[contenteditable]').forEach(function(el){
+          el.removeAttribute('contenteditable');
+        });
+      }
+    }).then(function(canvas){
+
+      /* Restaurar UI */
+      addWrap.style.display     = '';
+      pWrap.style.display       = '';
+      controls.style.visibility = '';
+      tip.style.display         = '';
+      document.querySelectorAll('.delbtn').forEach(function(b){ b.style.display=''; });
+
+      var fecha    = (document.getElementById('fecha').textContent||'semana').trim().replace(/[\/\\:*?"<>|]/g,'_');
+      var filename = 'PROTASA-Plan-Lunes-'+fecha+'.png';
+
+      canvas.toBlob(function(blob){
+        var file = new File([blob], filename, { type:'image/png' });
+
+        /* iOS / Android — sheet nativo de compartir → WhatsApp, Instagram, etc. */
+        if(navigator.canShare && navigator.canShare({ files:[file] })){
+          navigator.share({ title:'PROTASA – Plan de Trabajo', files:[file] })
+            .catch(function(e){ if(e.name!=='AbortError') mostrarToast('No se pudo compartir.'); });
+
+        } else {
+          /* Desktop — descarga directa */
+          var url = URL.createObjectURL(blob);
+          var a   = document.createElement('a');
+          a.href = url; a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          setTimeout(function(){ URL.revokeObjectURL(url); }, 3000);
+        }
+      }, 'image/png');
+
+    }).catch(function(err){
+      addWrap.style.display=''; pWrap.style.display=''; controls.style.visibility=''; tip.style.display='';
+      document.querySelectorAll('.delbtn').forEach(function(b){ b.style.display=''; });
+      alert('Error al generar imagen: '+err.message);
     });
   });
 }
 
 /* ── Copiar texto para WhatsApp ── */
-function copiarTexto() {
-  var fecha = (document.getElementById('fecha').textContent || '').trim();
-  var msg = 'Buenas Tardes, lo que tendremos en los Despalillos y Abertura para este Lunes ' + fecha + ' ⬇️';
-
-  rows.forEach(function(r) {
-    var titulo = r.title.trim();
-    if (/notas/i.test(titulo) || /otras actividades/i.test(titulo)) return;
-    msg += '\n\n' + titulo;
-    if (r.detail.trim()) msg += '\n' + r.detail.trim();
+function copiarTexto(){
+  var fecha = (document.getElementById('fecha').textContent||'').trim();
+  var msg   = 'Buenas Tardes, lo que tendremos en los Despalillos y Abertura para este Lunes '+fecha+' ⬇️';
+  rows.forEach(function(r){
+    if(/notas/i.test(r.title)||/otras actividades/i.test(r.title)) return;
+    msg += '\n\n'+r.title+(r.detail ? '\n'+r.detail : '');
   });
-
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(msg).then(function() {
-      mostrarToast('✅ ¡Mensaje copiado para WhatsApp!');
-    }).catch(function() {
-      fallbackCopy(msg);
-    });
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(msg)
+      .then(function(){ mostrarToast('✅ ¡Copiado para WhatsApp!'); })
+      .catch(function(){ fallbackCopy(msg); });
   } else {
     fallbackCopy(msg);
   }
 }
-
-function fallbackCopy(msg) {
+function fallbackCopy(msg){
   var ta = document.createElement('textarea');
   ta.value = msg;
-  ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
+  ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0;';
   document.body.appendChild(ta);
   ta.focus(); ta.select();
   try { document.execCommand('copy'); mostrarToast('✅ ¡Copiado!'); }
-  catch(e) { prompt('Copia este mensaje:', msg); }
+  catch(e){ prompt('Copia este mensaje:', msg); }
   document.body.removeChild(ta);
 }
 
-/* ── Toast de confirmación ── */
-function mostrarToast(msg) {
+/* ── Toast ── */
+function mostrarToast(msg){
   var t = document.createElement('div');
   t.textContent = msg;
-  t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1B3A28;color:#C8A84B;padding:10px 20px;border-radius:10px;font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.8px;z-index:9999;box-shadow:0 4px 14px rgba(0,0,0,.25);';
+  t.style.cssText = 'position:fixed;bottom:28px;left:50%;transform:translateX(-50%);'
+    +'background:#1B3A28;color:#C8A84B;padding:11px 22px;border-radius:10px;'
+    +'font-family:Oswald,sans-serif;font-size:13px;letter-spacing:.8px;'
+    +'z-index:9999;pointer-events:none;white-space:nowrap;';
   document.body.appendChild(t);
-  setTimeout(function(){ t.style.opacity='0'; t.style.transition='opacity .5s'; }, 2200);
+  setTimeout(function(){ t.style.transition='opacity .5s'; t.style.opacity='0'; }, 2200);
   setTimeout(function(){ if(t.parentNode) t.parentNode.removeChild(t); }, 2800);
 }
-
-/* ── Ayuda íconos ── */
-var tip = document.createElement('p');
-tip.className = 'ico-tip';
-tip.textContent = 'Tip: Clic en el ícono verde para cambiarlo · Clic en el texto para editar';
-document.getElementById('acts').parentNode.insertBefore(tip, document.getElementById('acts'));
 
 /* ── Init ── */
 render();
